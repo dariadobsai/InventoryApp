@@ -6,12 +6,17 @@
 
     <item
         android:id="@+id/action_save"
-        android:title="Save"
-        android:icon="@drawable/ic_plus"
+        android:icon="@drawable/ic_done"
+        android:title="@string/menu_action_save"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_delete"
-        android:title="Delete"
+        android:title="@string/menu_action_delete"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_order"
+        android:title="@string/menu_action_send_email"
         app:showAsAction="never" />
 </menu>

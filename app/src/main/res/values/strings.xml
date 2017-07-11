@@ -1,52 +1,88 @@
 <resources>
     <string name="app_name">Shop</string>
 
-    <string name="action_delete_all_entries">Delete All Products</string>
+    <string name="product_list_is_empty">The product list is empty</string>
+
+    <string name="product">Product:</string>
+
+    <string name="price">Price:</string>
+
+    <string name="quantity">Quantity:</string>
+
+    <string name="currency_for_price">USD</string>
+
+    <string name="product_name_hint">Name</string>
+
+    <string name="product_price_hint">0</string>
+
+    <string name="product_quantity_hint">0</string>
+
+    <string name="product_increase_button">+</string>
+
+    <string name="product_decrease_button">-</string>
+
+    <string name="product_email_hint">Type your message here …</string>
+
+    <string name="order_now_button">Order Now!</string>
+
+    <string name="sale_button">Sale</string>
+
+    <string name="menu_action_save">Save</string>
+
+    <string name="menu_action_delete">Delete</string>
+
+    <string name="menu_action_send_email">Send e-mail</string>
+
+    <string name="menu_action_insert_product">Insert a new Product</string>
+
+    <string name="menu_action_delete_all_entries">Delete all entries</string>
 
     <string name="editor_activity_title_new_product">Add a Product</string>
 
     <string name="editor_activity_title_edit_product">Edit a Product</string>
 
-    <string name="editor_error_msg_picture_requires">Picture is required</string>
+    <string name="error_msg_quantity_requires_input">Enter the quantity first</string>
 
-    <string name="editor_error_msg_name_requires">Name is required</string>
+    <string name="error_msg_picture_requires">Picture is required</string>
 
-    <string name="editor_error_msg_price_requires">Price is required</string>
+    <string name="error_msg_name_requires">Name is required</string>
 
-    <string name="editor_error_msg_quantity_requires">Quantity is required</string>
+    <string name="error_msg_price_requires">Price is required</string>
 
-    <string name="editor_insert_product_failed">Insert product error</string>
+    <string name="error_msg_quantity_requires">Quantity is required</string>
 
-    <string name="editor_insert_product_success">Product was inserted successfully</string>
+    <string name="error_msg_email_requires">Message to the supplier is required</string>
 
-    <string name="editor_update_product_failed">Update product error</string>
+    <string name="insert_product_failed">Insert product error</string>
 
-    <string name="editor_update_product_success">Product was updated successfully</string>
+    <string name="insert_product_success">Product was inserted successfully</string>
 
-    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="update_product_failed">Update product error</string>
+
+    <string name="update_product_success">Product was updated successfully</string>
+
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
 
-    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
     <string name="discard">Discard</string>
 
-    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
     <string name="keep_editing">Keep Editing</string>
 
-    <!-- Toast message in editor when current pet was successfully deleted [CHAR LIMIT=NONE] -->
-    <string name="editor_delete_pet_successful">Pet deleted</string>
+    <string name="delete_product_successful">Product is deleted</string>
 
-    <!-- Toast message in editor when current pet has failed to be deleted [CHAR LIMIT=NONE] -->
-    <string name="editor_delete_pet_failed">Error with deleting pet</string>
+    <string name="delete_product_failed">Error with deleting product</string>
 
-    <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
-    <string name="delete_dialog_msg">Delete this pet?</string>
+    <string name="delete_dialog_msg">Delete this product?</string>
 
-    <!-- Dialog button text for the option to confirm deleting the current pet [CHAR LIMIT=20] -->
     <string name="delete">Delete</string>
 
-    <!-- Dialog button text for the option to cancel deletion of the current pet [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
 
-    <string name="imare_url">android.resource://com.example.android.Shop/drawable/add_image</string>
+    <string name="product_is_sold">Sold!</string>
 
+    <string name="mail_subject">Order the product</string>
+
+    <string name="mail_stream">Hello</string>
+
+    <string name="text_about_order"><b>Info:</b> To order the product right now, just click on the Order button and send the email to the official supplier. We will contact you in the next 24 hours</string>
 </resources>
+

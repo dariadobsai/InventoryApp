@@ -5,11 +5,7 @@
     tools:context="com.example.android.shop.CatalogActivity">
 
     <item
-        android:id="@+id/action_insert_data"
-        android:title="Insert a Product"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_delete_all_entries"
-        android:title="@string/action_delete_all_entries"
+        android:title="@string/menu_action_delete_all_entries"
         app:showAsAction="never" />
 </menu>

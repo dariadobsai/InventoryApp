@@ -2,7 +2,6 @@ package com.example.android.shop;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -20,12 +19,15 @@ import android.widget.ListView;
 
 import com.example.android.shop.data.ProductContract.ShopEntry;
 
+// Created by Daria Kalashnikova 11.07.2017
+
 public class CatalogActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     // Identifier for the products data loader
     private static final int PRODUCT_LOADER = 0;
     // Adapter for the ListView
     ProductAdapter mCursorAdapter;
+    private Uri currentUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +45,13 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
         });
 
         // Find the ListView which will be populated with the product data
-        ListView productList = (ListView) findViewById(R.id.list_pet);
+        ListView productList = (ListView) findViewById(R.id.list_products);
 
-        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items
         View emptyView = findViewById(R.id.empty_view);
         productList.setEmptyView(emptyView);
 
-        // Setup an Adapter to create a list item for each row of product data in the Cursor.
-        // There is no product data yet (until the loader finishes) so pass in null for the Cursor.
+        // Setup an Adapter to create a list item for each row of product data in the Cursor
         mCursorAdapter = new ProductAdapter(this, null);
         productList.setAdapter(mCursorAdapter);
 
@@ -58,7 +59,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
-                Uri currentUri = ContentUris.withAppendedId(ShopEntry.CONTENT_URI, id);
+                currentUri = ContentUris.withAppendedId(ShopEntry.CONTENT_URI, id);
                 intent.setData(currentUri);
                 startActivity(intent);
             }
@@ -68,28 +69,9 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
         getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
     }
 
-    /**
-     * Helper method to insert hardcoded pet data into the database. For debugging purposes only.
-     */
-    private void insertProduct() {
-        // Create a ContentValues object where column names are the keys,
-        // and Toto's pet attributes are the values.
-        ContentValues values = new ContentValues();
-        values.put(ShopEntry.COLUMN_PRODUCT_NAME, "Toto");
-        values.put(ShopEntry.COLUMN_PRODUCT_PRICE, 12);
-        values.put(ShopEntry.COLUMN_PRODUCT_QUANTITY, 11);
-
-        // Insert a new row for Toto into the provider using the ContentResolver.
-        // Use the {@link PetEntry#CONTENT_URI} to indicate that we want to insert
-        // into the pets database table.
-        // Receive the new content URI that will allow us to access Toto's data in the future.
-
-        Uri newUri = getContentResolver().insert(ShopEntry.CONTENT_URI, values);
-    }
-
     private void deleteAllProducts() {
         int rowsDeleted = getContentResolver().delete(ShopEntry.CONTENT_URI, null, null);
-        Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
+        Log.v("CatalogActivity", rowsDeleted + " rows deleted from shop database");
     }
 
     @Override
@@ -102,11 +84,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // User clicked on a menu option in the app bar overflow menu
-            // Respond to a click on the "Insert dummy data" menu option
-            case R.id.action_insert_data:
-                insertProduct();
-                return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
                 deleteAllProducts();
@@ -117,12 +94,14 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // Define a projection that specifies the columns from the table we care about.
+        // Define a projection that specifies the columns from the table we care about
         String[] projection = {
                 ShopEntry._ID,
+                ShopEntry.COLUMN_PRODUCT_IMAGE,
                 ShopEntry.COLUMN_PRODUCT_NAME,
                 ShopEntry.COLUMN_PRODUCT_PRICE,
-                ShopEntry.COLUMN_PRODUCT_QUANTITY};
+                ShopEntry.COLUMN_PRODUCT_QUANTITY,
+                ShopEntry.COLUMN_PRODUCT_EMAIL};
 
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context

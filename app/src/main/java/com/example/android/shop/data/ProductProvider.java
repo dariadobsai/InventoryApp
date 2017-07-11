@@ -8,10 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import static com.example.android.shop.data.ProductContract.ShopEntry;
+
+// Created by Daria Kalashnikova 11.07.2017
 
 public class ProductProvider extends ContentProvider {
 
@@ -97,6 +98,11 @@ public class ProductProvider extends ContentProvider {
     }
 
     private Uri insertProduct(Uri uri, ContentValues values) {
+        // Check that the image uri is not null
+        String image = values.getAsString(ShopEntry.COLUMN_PRODUCT_IMAGE);
+        if (image == null) {
+            throw new IllegalArgumentException("Product requires a name");
+        }
         // Check that the name is not null
         String name = values.getAsString(ShopEntry.COLUMN_PRODUCT_NAME);
         if (name == null) {
@@ -107,10 +113,15 @@ public class ProductProvider extends ContentProvider {
         if (price != null && price < 0) {
             throw new IllegalArgumentException("Product  requires valid price");
         }
-
+        // If the quantity is provided, check that it's greater than or equal to 0
         Integer quantity = values.getAsInteger(ShopEntry.COLUMN_PRODUCT_QUANTITY);
         if (quantity != null && quantity < 0) {
             throw new IllegalArgumentException("Product  requires valid quantity");
+        }
+        // If the message is provided, check that it is not null
+        String email = values.getAsString(ShopEntry.COLUMN_PRODUCT_EMAIL);
+        if (email == null) {
+            throw new IllegalArgumentException("Email for the supplier is required");
         }
 
         // Get writable database
@@ -124,7 +135,7 @@ public class ProductProvider extends ContentProvider {
             return null;
         }
 
-        // Notify all listeners that the data has changed for the pet content URI
+        // Notify all listeners that the data has changed for the products content URI
         getContext().getContentResolver().notifyChange(uri, null);
 
         // Return the new URI with the ID (of the newly inserted row) appended at the end
@@ -184,11 +195,18 @@ public class ProductProvider extends ContentProvider {
 
     private int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
+        // Check that the image uri is not null
+        if (values.containsKey(ShopEntry.COLUMN_PRODUCT_IMAGE)) {
+            String image = values.getAsString(ShopEntry.COLUMN_PRODUCT_IMAGE);
+            if (image == null) {
+                throw new IllegalArgumentException("Product requires a name");
+            }
+        }
         // Check that the name value is not null
         if (values.containsKey(ShopEntry.COLUMN_PRODUCT_NAME)) {
             String name = values.getAsString(ShopEntry.COLUMN_PRODUCT_NAME);
             if (name == null) {
-                throw new IllegalArgumentException("Pet requires a name");
+                throw new IllegalArgumentException("Product requires a name");
             }
         }
 
@@ -196,19 +214,26 @@ public class ProductProvider extends ContentProvider {
         if (values.containsKey(ShopEntry.COLUMN_PRODUCT_PRICE)) {
             Integer price = values.getAsInteger(ShopEntry.COLUMN_PRODUCT_PRICE);
             if (price != null && price < 0) {
-                throw new IllegalArgumentException("Pet requires valid gender");
+                throw new IllegalArgumentException("Product requires valid gender");
             }
         }
 
-        // Check that the weight value is valid.
+        // Check that the quantity value is valid.
         if (values.containsKey(ShopEntry.COLUMN_PRODUCT_QUANTITY)) {
             // Check that the weight is greater than or equal to 0 kg
             Integer quantity = values.getAsInteger(ShopEntry.COLUMN_PRODUCT_QUANTITY);
             if (quantity != null && quantity < 0) {
-                throw new IllegalArgumentException("Pet requires valid weight");
+                throw new IllegalArgumentException("Product requires valid weight");
             }
         }
 
+        // Check that the e-mail uri is not null
+        if (values.containsKey(ShopEntry.COLUMN_PRODUCT_EMAIL)) {
+            String email = values.getAsString(ShopEntry.COLUMN_PRODUCT_EMAIL);
+            if (email == null) {
+                throw new IllegalArgumentException("Email for the supplier is required");
+            }
+        }
         // If there are no values to update, then don't try to update the database
         if (values.size() == 0) {
             return 0;

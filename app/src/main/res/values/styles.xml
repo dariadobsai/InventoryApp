@@ -8,15 +8,72 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Style for image in catalog -->
+    <style name="ShopImage">
+       <item name="android:layout_width">@dimen/value_120dp</item>
+       <item name="android:layout_height">@dimen/value_120dp</item>
+       <item name="android:layout_centerHorizontal">true</item>
+       <item name="android:src">@drawable/shop</item>
+    </style>
+
+    <!-- Style for text under the image in catalog -->
+    <style name="InitialText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_below">@id/empty_list_image</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:paddingTop">@dimen/value_16dp</item>
+        <item name="android:text">@string/product_list_is_empty</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <!-- Style for Floating Action Button in catalog -->
+    <style name="FAB">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_margin">@dimen/value_16dp</item>
+        <item name="android:src">@drawable/ic_plus</item>
+    </style>
+
+    <!-- Style for Image in editor -->
+    <style name="AddImage">
+        <item name="android:layout_width">@dimen/value_120dp</item>
+        <item name="android:layout_height">@dimen/value_120dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:src">@drawable/add_image</item>
+        <item name="android:layout_margin">@dimen/value_10dp</item>
+    </style>
+
+    <!-- Style for LinearLayout(container) in editor -->
+    <style name="ContainerLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_toEndOf">@id/image</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
     <!-- Style for a category in the editor -->
     <style name="CategoryStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:paddingTop">16dp</item>
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/text_in_list</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/text_value_16sp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <!-- Style for Hint in editor -->
+    <style name="HintEditTextStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:paddingStart">@dimen/value_3dp</item>
+        <item name="android:paddingTop">@dimen/value_4dp</item>
     </style>
 
     <!-- Style for an EditText field in the editor -->
@@ -24,6 +81,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/text_value_16sp</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
@@ -32,9 +90,95 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingRight">@dimen/value_16dp</item>
+        <item name="android:paddingTop">@dimen/value_16dp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <!-- Style for buttons layout in the editor -->
+    <style name="ButtonsLayoutStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_below">@id/container_quantity</item>
+        <item name="android:layout_alignParentEnd">true</item>
+    </style>
+
+    <!-- Style for a button in the editor -->
+    <style name="ButtonStyle">
+        <item name="android:layout_height">@dimen/value_40dp</item>
+        <item name="android:layout_width">@dimen/value_60dp</item>
+        <item name="android:layout_margin">@dimen/value_7dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/shape_button</item>
+        <item name="android:backgroundTint">@color/buttons_color</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_value_25sp</item>
+        <item name="android:layout_alignParentEnd">true</item>
+    </style>
+
+    <!-- Style for a Text in the editor -->
+    <style name="TextStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_margin">@dimen/value_10dp</item>
+        <item name="android:text">@string/text_about_order</item>
+        <item name="android:textColor">@color/info_text</item>
+    </style>
+
+    <!-- Style for an Email EditText field in the editor -->
+    <style name="EmailStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_below">@id/info</item>
+        <item name="android:labelFor">@id/message</item>
+        <item name="android:layout_margin">@dimen/value_10dp</item>
+        <item name="android:hint">@string/product_email_hint</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- Style for the Order Button in the editor -->
+    <style name="OrderByttonStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_below">@id/message</item>
+        <item name="android:backgroundTint">@color/order_button_color</item>
+        <item name="android:text">@string/order_now_button</item>
+        <item name="android:layout_margin">@dimen/value_10dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- Style for the Text in the list -->
+    <style name="TextInListStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:textSize">@dimen/text_value_20sp</item>
+        <item name="android:textColor">@color/text_in_list</item>
+        <item name="android:layout_margin">@dimen/value_3dp</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <!-- Style for the Text in the list -->
+    <style name="TextInListStyle.2">
+        <item name="android:textSize">@dimen/text_value_16sp</item>
+    </style>
+
+    <!-- Style for a button in the editor -->
+    <style name="ButtonSaleStyle">
+        <item name="android:layout_width">@dimen/value_70dp</item>
+        <item name="android:layout_height">@dimen/value_40dp</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_below">@id/quantity</item>
+        <item name="android:layout_margin">@dimen/value_3dp</item>
+        <item name="android:background">@color/sale_button_color</item>
+        <item name="android:text">@string/sale_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_value_15sp</item>
+
     </style>
 
     <!-- Theme of the editor -->

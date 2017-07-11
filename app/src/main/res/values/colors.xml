@@ -2,12 +2,25 @@
 <resources>
     <color name="colorPrimary">#87CDDE</color>
     <color name="colorPrimaryDark">#6FACBB</color>
-    <color name="colorAccent">#4D7782</color>
+    <color name="colorAccent">#456691</color>
 
     <!-- Primary color for the editor -->
-    <color name="editorColorPrimary">#2D3640</color>
+    <color name="editorColorPrimary">#6FACBB</color>
 
     <!-- Primary dark color for the editor -->
-    <color name="editorColorPrimaryDark">#394450</color>
+    <color name="editorColorPrimaryDark">#649BA9</color>
 
+    <color name="floating_button_color">#598B97</color>
+
+    <color name="buttons_color">#87CDDE</color>
+
+    <color name="order_button_color">#EA4335</color>
+
+    <color name="sale_button_color">#34A853</color>
+
+    <color name="info_text">#3A555C</color>
+
+    <color name="quantity_background">#F0F0F0</color>
+
+    <color name="text_in_list">#2B3D4D</color>
 </resources>

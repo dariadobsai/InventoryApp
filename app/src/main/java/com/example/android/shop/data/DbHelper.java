@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import static com.example.android.shop.data.ProductContract.ShopEntry;
 
+// Created by Daria Kalashnikova 11.07.2017
+
 public class DbHelper extends SQLiteOpenHelper {
 
     // Name of the database file
@@ -22,15 +24,16 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create a String that contains the SQL statement to create the products table
-        String SQL_CREATE_PETS_TABLE =  "CREATE TABLE " + ShopEntry.TABLE_NAME + " ("
+        String SQL_CREATE_PRODUCTS_TABLE = "CREATE TABLE " + ShopEntry.TABLE_NAME + " ("
                 + ShopEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ShopEntry.COLUMN_PRODUCT_IMAGE + " TEXT NOT NULL, "
                 + ShopEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
-                + ShopEntry.COLUMN_PRODUCT_PRICE+ " INTEGER NOT NULL, "
-                + ShopEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL DEFAULT 0);";
+                + ShopEntry.COLUMN_PRODUCT_PRICE + " INTEGER NOT NULL, "
+                + ShopEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL DEFAULT 0, "
+                + ShopEntry.COLUMN_PRODUCT_EMAIL + " TEXT NOT NULL );";
 
         // Execute the SQL statement
-        db.execSQL(SQL_CREATE_PETS_TABLE);
+        db.execSQL(SQL_CREATE_PRODUCTS_TABLE);
     }
 
     // This is called when the database needs to be upgraded.

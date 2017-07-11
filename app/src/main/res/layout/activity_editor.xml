@@ -1,97 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="@dimen/value_10dp"
+    android:scrollbarThumbVertical="@android:color/transparent"
     tools:context="com.example.android.shop.EditorActivity">
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="120dp"
-        android:layout_height="100dp"
-        android:src="@drawable/add_image" />
-
-    <LinearLayout
-        android:id="@+id/product_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/CategoryStyle"
-            android:text="Product" />
+        <ImageView
+            android:id="@+id/image"
+            style="@style/AddImage"
+            tools:ignore="contentDescription" />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:paddingLeft="4dp">
-
-            <EditText
-                android:id="@+id/edit_name"
-                style="@style/EditorFieldStyle"
-                android:hint="Name"
-                android:inputType="textCapWords" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/container_quantity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/CategoryStyle"
-            android:text="Quantity" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:paddingLeft="4dp">
-
-           <EditText
-            android:id="@+id/edit_quantity"
-            style="@style/EditorFieldStyle"
-            android:hint="Quantity"
-            android:inputType="number" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/product_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/product_price"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/CategoryStyle"
-            android:text="Price" />
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:paddingLeft="4dp">
-
-            <EditText
-                android:id="@+id/edit_price"
-                style="@style/EditorFieldStyle"
-                android:hint="Price"
-                android:inputType="textCapWords" />
+            android:id="@+id/product_name"
+            style="@style/ContainerLayout">
 
             <TextView
-                android:id="@+id/label_weight_units"
-                style="@style/EditorUnitsStyle"
-                android:text="USD" />
+                style="@style/CategoryStyle"
+                android:text="@string/product" />
+
+            <LinearLayout style="@style/HintEditTextStyle">
+
+                <EditText
+                    android:id="@+id/edit_name"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/product_name_hint"
+                    android:inputType="textCapWords" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/product_price"
+            style="@style/ContainerLayout"
+            android:layout_below="@id/product_name">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/price" />
+
+            <LinearLayout style="@style/HintEditTextStyle">
+
+                <EditText
+                    android:id="@+id/edit_price"
+                    style="@style/EditorFieldStyle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="@string/product_price_hint" />
+
+                <TextView
+                    android:id="@+id/label_weight_units"
+                    style="@style/EditorUnitsStyle"
+                    android:text="@string/currency_for_price" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/container_quantity"
+            style="@style/ContainerLayout"
+            android:layout_below="@id/product_price">
+
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/quantity" />
+
+            <LinearLayout style="@style/HintEditTextStyle">
+
+                <EditText
+                    android:id="@+id/edit_quantity"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/product_quantity_hint"
+                    android:inputType="number" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttons_layout"
+            style="@style/ButtonsLayoutStyle">
+
+            <Button
+                android:id="@+id/decrease"
+                style="@style/ButtonStyle"
+                android:text="@string/product_decrease_button" />
+
+            <Button
+                android:id="@+id/increase"
+                style="@style/ButtonStyle"
+                android:text="@string/product_increase_button" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttons_layout">
+
+            <EditText
+                android:id="@+id/message"
+                style="@style/EmailStyle"
+                android:inputType="text"
+                android:labelFor="@id/message" />
+
+            <Button
+                android:id="@+id/order_now"
+                style="@style/OrderByttonStyle" />
+
+            <TextView
+                android:id="@+id/info"
+                style="@style/TextStyle" />
 
         </RelativeLayout>
-    </LinearLayout>
-</LinearLayout>
+    </RelativeLayout>
+</ScrollView>

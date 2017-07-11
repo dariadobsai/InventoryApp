@@ -94,6 +94,7 @@
             <Button
                 android:id="@+id/increase"
                 style="@style/ButtonStyle"
+                android:focusable="false"
                 android:text="@string/product_increase_button" />
         </LinearLayout>
 

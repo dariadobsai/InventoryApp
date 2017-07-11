@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.example.android.shop.R;
+
 import static com.example.android.shop.data.ProductContract.ShopEntry;
 
 // Created by Daria Kalashnikova 11.07.2017
@@ -101,27 +103,27 @@ public class ProductProvider extends ContentProvider {
         // Check that the image uri is not null
         String image = values.getAsString(ShopEntry.COLUMN_PRODUCT_IMAGE);
         if (image == null) {
-            throw new IllegalArgumentException("Product requires a name");
+            throw new IllegalArgumentException(String.valueOf(R.string.error_msg_picture_required));
         }
         // Check that the name is not null
         String name = values.getAsString(ShopEntry.COLUMN_PRODUCT_NAME);
         if (name == null) {
-            throw new IllegalArgumentException("Product requires a name");
+            throw new IllegalArgumentException(String.valueOf(R.string.error_msg_name_required));
         }
         // If the price is provided, check that it's greater than or equal to 0 USD
         Integer price = values.getAsInteger(ShopEntry.COLUMN_PRODUCT_PRICE);
         if (price != null && price < 0) {
-            throw new IllegalArgumentException("Product  requires valid price");
+            throw new IllegalArgumentException(String.valueOf(R.string.error_msg_valid_price_required));
         }
         // If the quantity is provided, check that it's greater than or equal to 0
         Integer quantity = values.getAsInteger(ShopEntry.COLUMN_PRODUCT_QUANTITY);
         if (quantity != null && quantity < 0) {
-            throw new IllegalArgumentException("Product  requires valid quantity");
+            throw new IllegalArgumentException(String.valueOf(R.string.error_msg_valid_quantity_required));
         }
         // If the message is provided, check that it is not null
         String email = values.getAsString(ShopEntry.COLUMN_PRODUCT_EMAIL);
         if (email == null) {
-            throw new IllegalArgumentException("Email for the supplier is required");
+            throw new IllegalArgumentException(String.valueOf(R.string.error_msg_email_required));
         }
 
         // Get writable database
@@ -129,7 +131,7 @@ public class ProductProvider extends ContentProvider {
 
         // Insert the new product with the given values
         long id = database.insert(ShopEntry.TABLE_NAME, null, values);
-        // If the ID is -1, then the insertion failed. Log an error and return null.
+        // If the ID is -1, then the insertion failed. Log an error and return null
         if (id == -1) {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
@@ -199,14 +201,14 @@ public class ProductProvider extends ContentProvider {
         if (values.containsKey(ShopEntry.COLUMN_PRODUCT_IMAGE)) {
             String image = values.getAsString(ShopEntry.COLUMN_PRODUCT_IMAGE);
             if (image == null) {
-                throw new IllegalArgumentException("Product requires a name");
+                throw new IllegalArgumentException(String.valueOf(R.string.error_msg_picture_required));
             }
         }
         // Check that the name value is not null
         if (values.containsKey(ShopEntry.COLUMN_PRODUCT_NAME)) {
             String name = values.getAsString(ShopEntry.COLUMN_PRODUCT_NAME);
             if (name == null) {
-                throw new IllegalArgumentException("Product requires a name");
+                throw new IllegalArgumentException(String.valueOf(R.string.error_msg_name_required));
             }
         }
 
@@ -214,16 +216,16 @@ public class ProductProvider extends ContentProvider {
         if (values.containsKey(ShopEntry.COLUMN_PRODUCT_PRICE)) {
             Integer price = values.getAsInteger(ShopEntry.COLUMN_PRODUCT_PRICE);
             if (price != null && price < 0) {
-                throw new IllegalArgumentException("Product requires valid gender");
+                throw new IllegalArgumentException(String.valueOf(R.string.error_msg_price_required));
             }
         }
 
-        // Check that the quantity value is valid.
+        // Check that the quantity value is valid
         if (values.containsKey(ShopEntry.COLUMN_PRODUCT_QUANTITY)) {
             // Check that the weight is greater than or equal to 0 kg
             Integer quantity = values.getAsInteger(ShopEntry.COLUMN_PRODUCT_QUANTITY);
             if (quantity != null && quantity < 0) {
-                throw new IllegalArgumentException("Product requires valid weight");
+                throw new IllegalArgumentException(String.valueOf(R.string.error_msg_quantity_required));
             }
         }
 
@@ -231,9 +233,10 @@ public class ProductProvider extends ContentProvider {
         if (values.containsKey(ShopEntry.COLUMN_PRODUCT_EMAIL)) {
             String email = values.getAsString(ShopEntry.COLUMN_PRODUCT_EMAIL);
             if (email == null) {
-                throw new IllegalArgumentException("Email for the supplier is required");
+                throw new IllegalArgumentException(String.valueOf(R.string.error_msg_email_required));
             }
         }
+
         // If there are no values to update, then don't try to update the database
         if (values.size() == 0) {
             return 0;

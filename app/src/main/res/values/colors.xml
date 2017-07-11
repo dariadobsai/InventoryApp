@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#87CDDE</color>
     <color name="colorPrimaryDark">#6FACBB</color>
-    <color name="colorAccent">#456691</color>
+    <color name="colorAccent">#6FACBB</color>
 
     <!-- Primary color for the editor -->
     <color name="editorColorPrimary">#6FACBB</color>
@@ -17,6 +17,8 @@
     <color name="order_button_color">#EA4335</color>
 
     <color name="sale_button_color">#34A853</color>
+
+    <color name="sale_button_sold_color">#EA4335</color>
 
     <color name="info_text">#3A555C</color>
 

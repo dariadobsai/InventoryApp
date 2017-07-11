@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Shop</string>
 
-    <string name="product_list_is_empty">The product list is empty</string>
+    <string name="product_list_is_empty">The product list is empty now</string>
 
     <string name="product">Product:</string>
 
@@ -41,17 +41,25 @@
 
     <string name="editor_activity_title_edit_product">Edit a Product</string>
 
-    <string name="error_msg_quantity_requires_input">Enter the quantity first</string>
+    <string name="msg_write_the_quantity">Please, enter the quantity</string>
 
-    <string name="error_msg_picture_requires">Picture is required</string>
+    <string name="error_msg_quantity_required_input">Enter the quantity first</string>
 
-    <string name="error_msg_name_requires">Name is required</string>
+    <string name="error_msg_picture_required">Picture is required</string>
 
-    <string name="error_msg_price_requires">Price is required</string>
+    <string name="error_msg_name_required">Name is required</string>
 
-    <string name="error_msg_quantity_requires">Quantity is required</string>
+    <string name="error_msg_price_required">Price is required</string>
 
-    <string name="error_msg_email_requires">Message to the supplier is required</string>
+    <string name="error_msg_valid_price_required">Valid price is required</string>
+
+    <string name="error_msg_valid_quantity_required">Valid quantity is required</string>
+
+    <string name="error_msg_mail_required">Email for the supplier is required</string>
+
+    <string name="error_msg_quantity_required">Quantity is required</string>
+
+    <string name="error_msg_email_required">Message to the supplier is required</string>
 
     <string name="insert_product_failed">Insert product error</string>
 
@@ -82,6 +90,12 @@
     <string name="mail_subject">Order the product</string>
 
     <string name="mail_stream">Hello</string>
+
+    <string name="mail_email">someperson@gmail.com</string>
+
+    <string name="snak_bar_msg">Fill all fields and save the data</string>
+
+    <string name="image_selector">Select Image</string>
 
     <string name="text_about_order"><b>Info:</b> To order the product right now, just click on the Order button and send the email to the official supplier. We will contact you in the next 24 hours</string>
 </resources>

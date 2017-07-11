@@ -11,22 +11,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.shop.data.ProductContract.ShopEntry;
 
 // Created by Daria Kalashnikova 11.07.2017
 
-public class ProductAdapter extends CursorAdapter {
+class ProductAdapter extends CursorAdapter {
 
     private Context mContext;
-    public ProductAdapter(Context context, Cursor cursor) {
+    private String mQuantity;
+    private TextView quantity;
+    private int currentQuantity;
+    private long id;
+    private Button sale;
+
+    ProductAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
         this.mContext = context;
     }
-
-    private String mQuantity;
-    private TextView quantity;
-    private long id;
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -39,14 +42,15 @@ public class ProductAdapter extends CursorAdapter {
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView price = (TextView) view.findViewById(R.id.price);
         quantity = (TextView) view.findViewById(R.id.quantity);
-        Button sale = (Button) view.findViewById(R.id.sale_button);
+        sale = (Button) view.findViewById(R.id.sale_button);
 
         id = cursor.getLong(cursor.getColumnIndex(ShopEntry._ID));
+
         int indexName = cursor.getColumnIndex(ShopEntry.COLUMN_PRODUCT_NAME);
         int indexPrice = cursor.getColumnIndex(ShopEntry.COLUMN_PRODUCT_PRICE);
         int indexQuantity = cursor.getColumnIndex(ShopEntry.COLUMN_PRODUCT_QUANTITY);
 
-        final String mName = cursor.getString(indexName);
+        String mName = cursor.getString(indexName);
         String mPrice = cursor.getString(indexPrice);
         mQuantity = cursor.getString(indexQuantity);
 
@@ -63,14 +67,15 @@ public class ProductAdapter extends CursorAdapter {
     }
 
     private void decreaseQuantity() {
-        int currentQuantity = Integer.parseInt(mQuantity);
+        currentQuantity = Integer.parseInt(mQuantity);
         if (currentQuantity > 0) {
-            currentQuantity -= 1;
+            currentQuantity--;
             Uri mUri = ContentUris.withAppendedId(ShopEntry.CONTENT_URI, id);
             final ContentValues values = new ContentValues();
-            values.put(ShopEntry.COLUMN_PRODUCT_QUANTITY, currentQuantity);
+            mQuantity = String.valueOf(currentQuantity);
+            values.put(ShopEntry.COLUMN_PRODUCT_QUANTITY, mQuantity);
             mContext.getContentResolver().update(mUri, values, null, null);
-            quantity.setText(Integer.toString(currentQuantity));
+            quantity.setText(mQuantity);
         }
     }
 }

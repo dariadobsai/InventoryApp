@@ -24,8 +24,9 @@
         <item name="android:layout_below">@id/empty_list_image</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:paddingTop">@dimen/value_16dp</item>
+        <item name="android:gravity">center</item>
         <item name="android:text">@string/product_list_is_empty</item>
-        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textSize">@dimen/text_value_15sp</item>
     </style>
 
     <!-- Style for Floating Action Button in catalog -->

@@ -23,11 +23,12 @@ import com.example.android.shop.data.ProductContract.ShopEntry;
 
 public class CatalogActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    // Identifier for the products data loader
     private static final int PRODUCT_LOADER = 0;
-    // Adapter for the ListView
     ProductAdapter mCursorAdapter;
-    private Uri currentUri;
+    ListView productList;
+    View emptyView;
+    Intent intent;
+    private Uri mCurrentUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +46,10 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
         });
 
         // Find the ListView which will be populated with the product data
-        ListView productList = (ListView) findViewById(R.id.list_products);
+        productList = (ListView) findViewById(R.id.list_products);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items
-        View emptyView = findViewById(R.id.empty_view);
+        emptyView = findViewById(R.id.empty_view);
         productList.setEmptyView(emptyView);
 
         // Setup an Adapter to create a list item for each row of product data in the Cursor
@@ -58,9 +59,9 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
         productList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
-                currentUri = ContentUris.withAppendedId(ShopEntry.CONTENT_URI, id);
-                intent.setData(currentUri);
+                intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                mCurrentUri = ContentUris.withAppendedId(ShopEntry.CONTENT_URI, id);
+                intent.setData(mCurrentUri);
                 startActivity(intent);
             }
         });

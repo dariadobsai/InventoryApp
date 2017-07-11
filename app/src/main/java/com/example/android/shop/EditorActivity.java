@@ -45,6 +45,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
     private static final int PICK_IMAGE_REQUEST = 0;
     private static final int EXISTING_LOADER = 0;
     private static final int SEND_MAIL_REQUEST = 0;
+    Button toIncrease;
+    Button toDecrease;
     private int quantity;
     private Uri mCurrentUri;
     private Uri mUri;
@@ -53,10 +55,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
     private EditText mPriceEditText;
     private EditText mQuantityEditText;
     private EditText mEmail;
-    private Button toIncrease;
-    private Button toDecrease;
     private Button toOrder;
-    private int maximumIncreaseQuantity = 1000;
     // Boolean flag that keeps track of whether the product has been edited or not
     private boolean mProductHasChanged = false;
 
@@ -66,10 +65,20 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.increase:
-                    increaseQuantity();
+                    if (mQuantityEditText.getText().toString().equals("")) {
+                        toIncrease.setEnabled(false);
+                        Toast.makeText(EditorActivity.this, getResources().getString(R.string.msg_write_the_quantity),
+                                Toast.LENGTH_SHORT).show();
+                    } else
+                        increaseQuantity();
                     break;
                 case R.id.decrease:
-                    decreaseQuantity();
+                    if (mQuantityEditText.getText().toString().equals("")) {
+                        toIncrease.setEnabled(false);
+                        Toast.makeText(EditorActivity.this, getResources().getString(R.string.msg_write_the_quantity),
+                                Toast.LENGTH_SHORT).show();
+                    } else
+                        decreaseQuantity();
                     break;
                 case R.id.order_now:
                     orderTheProduct();
@@ -95,7 +104,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
         // Examine the intent that was used to launch this activity,
-        // in order to figure out if we're creating a new product or editing an existing one.
+        // in order to figure out if we're creating a new product or editing an existing one
         Intent intent = getIntent();
         mCurrentUri = intent.getData();
         // Find all relevant views that we will need to read user input from
@@ -111,7 +120,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         // creating a new product
         if (mCurrentUri == null) {
             setTitle(getString(R.string.editor_activity_title_new_product));
-            // Invalidate the options menu, so the "Delete" menu option can be hidden.
+            // Invalidate the options menu, so the "Delete" menu option can be hidden
             // (It doesn't make sense to delete a product that hasn't been created yet)
             invalidateOptionsMenu();
         } else {
@@ -124,7 +133,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
-        // or not, if the user tries to leave the editor without saving.
+        // or not, if the user tries to leave the editor without saving
         mNameEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
@@ -145,6 +154,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
 
     private void increaseQuantity() {
         quantity = Integer.parseInt(mQuantityEditText.getText().toString().trim());
+        int maximumIncreaseQuantity = 1000;
         if (quantity < maximumIncreaseQuantity) {
             mProductHasChanged = true;
             quantity++;
@@ -163,13 +173,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
 
     private void orderTheProduct() {
         if (mCurrentUri != null) {
-            String subject = String.valueOf(R.string.mail_subject);
-            String stream = String.valueOf(R.string.mail_subject) + "\n" + mCurrentUri.toString() + "\n";
+            String subject = getString(R.string.mail_subject);
+            String stream = (mEmail.getText().toString() + "\n");
+            String recipient = getString(R.string.mail_email);
 
             Intent shareIntent = ShareCompat.IntentBuilder.from(this)
                     .setStream(mUri)
                     .setSubject(subject)
                     .setText(stream)
+                    .setEmailTo(new String[]{recipient})
                     .getIntent();
 
             // Provide read access
@@ -186,14 +198,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
             startActivityForResult(Intent.createChooser(shareIntent, "Share with"), SEND_MAIL_REQUEST);
 
         } else {
-            Snackbar.make(toOrder, "Image is not selected", Snackbar.LENGTH_LONG)
+            Snackbar.make(toOrder, R.string.snak_bar_msg, Snackbar.LENGTH_LONG)
                     .setAction("Select",
                             new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            openImageSelector();
-                        }
-                    }).show();
+                                @Override
+                                public void onClick(View view) {
+                                    openImageSelector();
+                                }
+                            }).show();
         }
     }
 
@@ -208,7 +220,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         }
 
         intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Select Image"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.image_selector)), PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -216,14 +228,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         // The ACTION_OPEN_DOCUMENT intent was sent with the request code READ_REQUEST_CODE = 0;
         // If the request code seen here doesn't match, it's the response to some other intent,
-        // and the below code shouldn't run at all.
+        // and the below code shouldn't run at all
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             // The document selected by the user won't be returned in the intent
             // Instead, a URI to that document will be contained in the return intent
             // provided to this method as a parameter. Pull that uri using "resultData.getData()"
             if (resultData != null) {
                 mUri = resultData.getData();
-                Log.i(LOG_TAG, "Uri: " + mUri.toString());
+                Log.v(LOG_TAG, "Uri: " + mUri.toString());
                 mImage.setImageBitmap(getBitmapFromUri(mUri));
             }
         }
@@ -246,6 +258,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
             BitmapFactory.Options bmOptions = new BitmapFactory.Options();
             bmOptions.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(input, null, bmOptions);
+            assert input != null;
             input.close();
 
             int photoW = bmOptions.outWidth;
@@ -261,6 +274,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
 
             input = this.getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(input, null, bmOptions);
+            assert input != null;
             input.close();
             return bitmap;
 
@@ -272,29 +286,29 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
             return null;
         } finally {
             try {
+                assert input != null;
                 input.close();
-            } catch (IOException ioe) {
-
+            } catch (IOException ignored) {
             }
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_editor.xml file.
-        // This adds menu items to the app bar.
+        // Inflate the menu options from the res/menu/menu_editor.xml file
+        // This adds menu items to the app bar
         getMenuInflater().inflate(R.menu.menu_editor, menu);
         return true;
     }
 
     /**
      * This method is called after invalidateOptionsMenu(), so that the
-     * menu can be updated (some menu items can be hidden or made visible).
+     * menu can be updated (some menu items can be hidden or made visible)
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        // If this is a new product, hide the "Delete" menu item.
+        // If this is a new product, hide the "Delete" menu item
         if (mCurrentUri == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
@@ -325,20 +339,20 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
                 // If the product hasn't changed, continue with navigating up to parent activity
-                // which is the {@link CatalogActivity}.
+                // which is the {@link CatalogActivity}
                 if (!mProductHasChanged) {
                     NavUtils.navigateUpFromSameTask(EditorActivity.this);
                     return true;
                 }
 
-                /// Otherwise if there are unsaved changes, setup a dialog to warn the user.
+                // Otherwise if there are unsaved changes, setup a dialog to warn the user
                 // Create a click listener to handle the user confirming that
-                // changes should be discarded.
+                // changes should be discarded
                 DialogInterface.OnClickListener discardButtonClickListener =
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                // User clicked "Discard" button, navigate to parent activity.
+                                // User clicked "Discard" button, navigate to parent activity
                                 NavUtils.navigateUpFromSameTask(EditorActivity.this);
                             }
                         };
@@ -351,7 +365,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
     }
 
     /**
-     * This method is called when the back button is pressed.
+     * This method is called when the back button is pressed
      */
     @Override
     public void onBackPressed() {
@@ -361,13 +375,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
             return;
         }
 
-        // Otherwise if there are unsaved changes, setup a dialog to warn the user.
-        // Create a click listener to handle the user confirming that changes should be discarded.
+        // Otherwise if there are unsaved changes, setup a dialog to warn the user
+        // Create a click listener to handle the user confirming that changes should be discarded
         DialogInterface.OnClickListener discardButtonClickListener =
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // User clicked "Discard" button, close the current activity.
+                        // User clicked "Discard" button, close the current activity
                         finish();
                     }
                 };
@@ -392,67 +406,58 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
             return;
         }
         // Create a ContentValues object where column names are the keys,
-        // and product attributes from the editor are the values.
+        // and product attributes from the editor are the values
         ContentValues values = new ContentValues();
-        values.put(ShopEntry.COLUMN_PRODUCT_NAME, nameString);
-        values.put(ShopEntry.COLUMN_PRODUCT_PRICE, priceString);
-        values.put(ShopEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
-        values.put(ShopEntry.COLUMN_PRODUCT_EMAIL, emailString);
 
         if (!TextUtils.isEmpty(nameString)) {
-            values.put(ShopEntry.COLUMN_PRODUCT_PRICE, nameString);
+            values.put(ShopEntry.COLUMN_PRODUCT_NAME, nameString);
         } else {
-            Toast.makeText(this, getResources().getString(R.string.error_msg_name_requires), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.error_msg_name_required), Toast.LENGTH_SHORT).show();
             return;
         }
-
+        int price;
         if (!TextUtils.isEmpty(priceString)) {
-            int price = Integer.parseInt(priceString);
+            price = Integer.parseInt(priceString);
             values.put(ShopEntry.COLUMN_PRODUCT_PRICE, price);
         } else {
-            Toast.makeText(this, getResources().getString(R.string.error_msg_price_requires), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.error_msg_price_required), Toast.LENGTH_SHORT).show();
             return;
         }
-
-        int quantity = Integer.parseInt(quantityString);
+        int quantity;
         if (!TextUtils.isEmpty(quantityString)) {
+            quantity = Integer.parseInt(quantityString);
             values.put(ShopEntry.COLUMN_PRODUCT_QUANTITY, quantity);
         } else {
-            Toast.makeText(this, getResources().getString(R.string.error_msg_quantity_requires), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.error_msg_quantity_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!TextUtils.isEmpty(emailString)) {
-            values.put(ShopEntry.COLUMN_PRODUCT_PRICE, emailString);
+            values.put(ShopEntry.COLUMN_PRODUCT_EMAIL, emailString);
         } else {
-            Toast.makeText(this, getResources().getString(R.string.error_msg_email_requires), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.error_msg_email_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (mUri != null) {
-            try {
-                values.put(ShopEntry.COLUMN_PRODUCT_IMAGE, mUri.toString());
-            } catch (Exception ex) {
-                Toast.makeText(this, getString(R.string.error_msg_picture_requires),
-                        Toast.LENGTH_SHORT).show();
-            }
+            values.put(ShopEntry.COLUMN_PRODUCT_IMAGE, mUri.toString());
         } else {
-            Toast.makeText(this, getResources().getString(R.string.error_msg_picture_requires), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.error_msg_picture_required), Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Determine if this is a new or existing product by checking if mCurrentUri is null or not
         if (mCurrentUri == null) {
             // This is a NEW product, so insert a new product into the provider,
-            // returning the content URI for the new product.
+            // returning the content URI for the new product
             Uri newUri = getContentResolver().insert(ShopEntry.CONTENT_URI, values);
-            // Show a toast message depending on whether or not the insertion was successful.
+            // Show a toast message depending on whether or not the insertion was successful
             if (newUri == null) {
-                // If the new content URI is null, then there was an error with insertion.
+                // If the new content URI is null, then there was an error with insertion
                 Toast.makeText(this, getString(R.string.insert_product_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // Otherwise, the insertion was successful and we can display a toast.
+                // Otherwise, the insertion was successful and we can display a toast
                 Toast.makeText(this, getString(R.string.insert_product_success),
                         Toast.LENGTH_SHORT).show();
             }
@@ -460,16 +465,16 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
             // Otherwise this is an EXISTING product, so update the product with content URI: mCurrentUri
             // and pass in the new ContentValues. Pass in null for the selection and selection args
             // because mCurrentUri will already identify the correct row in the database that
-            // we want to modify.
+            // we want to modify
             int rowsAffected = getContentResolver().update(mCurrentUri, values, null, null);
 
-            // Show a toast message depending on whether or not the update was successful.
+            // Show a toast message depending on whether or not the update was successful
             if (rowsAffected == 0) {
-                // If no rows were affected, then there was an error with the update.
+                // If no rows were affected, then there was an error with the update
                 Toast.makeText(this, getString(R.string.update_product_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // Otherwise, the update was successful and we can display a toast.
+                // Otherwise, the update was successful and we can display a toast
                 Toast.makeText(this, getString(R.string.update_product_success),
                         Toast.LENGTH_SHORT).show();
             }
@@ -503,7 +508,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         if (cursor == null || cursor.getCount() < 1) {
             return;
         }
-
         // Proceed with moving to the first row of the cursor and reading data from it
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
@@ -534,7 +538,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        // If the loader is invalidated, clear out all the data from the input fields.
+        // If the loader is invalidated, clear out all the data from the input fields
         mNameEditText.setText("");
         mPriceEditText.setText("");
         mQuantityEditText.setText("");
@@ -544,7 +548,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
     private void showUnsavedChangesDialog(
             DialogInterface.OnClickListener discardButtonClickListener) {
         // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the positive and negative buttons on the dialog.
+        // for the positive and negative buttons on the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.unsaved_changes_dialog_msg);
         builder.setPositiveButton(R.string.discard, discardButtonClickListener);
@@ -563,24 +567,22 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         alertDialog.show();
     }
 
-    /**
-     * Prompt the user to confirm that they want to delete this product.
-     */
+    // Prompt the user to confirm that they want to delete this product
     private void showDeleteConfirmationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the positive and negative buttons on the dialog.
+        // for the positive and negative buttons on the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the product.
+                // User clicked the "Delete" button, so delete the product
                 deleteProduct();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the product.
+                // and continue editing the product
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -592,24 +594,22 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         alertDialog.show();
     }
 
-    /**
-     * Perform the deletion of the product in the database.
-     */
+    // Perform the deletion of the product in the database
     private void deleteProduct() {
-        // Only perform the delete if this is an existing product.
+        // Only perform the delete if this is an existing product
         if (mCurrentUri != null) {
-            // Call the ContentResolver to delete the product at the given content URI.
+            // Call the ContentResolver to delete the product at the given content URI
             // Pass in null for the selection and selection args because the mCurrentUri
-            // content URI already identifies the product that we want.
+            // content URI already identifies the product that we want
             int rowsDeleted = getContentResolver().delete(mCurrentUri, null, null);
 
-            // Show a toast message depending on whether or not the delete was successful.
+            // Show a toast message depending on whether or not the delete was successful
             if (rowsDeleted == 0) {
-                // If no rows were deleted, then there was an error with the delete.
+                // If no rows were deleted, then there was an error with the delete
                 Toast.makeText(this, getString(R.string.delete_product_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // Otherwise, the delete was successful and we can display a toast.
+                // Otherwise, the delete was successful and we can display a toast
                 Toast.makeText(this, getString(R.string.delete_product_successful),
                         Toast.LENGTH_SHORT).show();
             }

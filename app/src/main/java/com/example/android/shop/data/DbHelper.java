@@ -8,7 +8,7 @@ import static com.example.android.shop.data.ProductContract.ShopEntry;
 
 // Created by Daria Kalashnikova 11.07.2017
 
-public class DbHelper extends SQLiteOpenHelper {
+class DbHelper extends SQLiteOpenHelper {
 
     // Name of the database file
     private static final String DATABASE_NAME = "products.db";
@@ -16,11 +16,10 @@ public class DbHelper extends SQLiteOpenHelper {
     // Database version
     private static final int DATABASE_VERSION = 1;
 
-    public DbHelper(Context context) {
+    DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // This is called when the database is created for the first time.
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create a String that contains the SQL statement to create the products table
@@ -36,7 +35,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_PRODUCTS_TABLE);
     }
 
-    // This is called when the database needs to be upgraded.
+    // This is called when the database needs to be upgraded
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }

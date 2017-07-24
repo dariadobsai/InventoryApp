@@ -74,7 +74,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
                     break;
                 case R.id.decrease:
                     if (mQuantityEditText.getText().toString().equals("")) {
-                        toIncrease.setEnabled(false);
+                        toDecrease.setEnabled(false);
                         Toast.makeText(EditorActivity.this, getResources().getString(R.string.msg_write_the_quantity),
                                 Toast.LENGTH_SHORT).show();
                     } else
@@ -166,7 +166,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderCallbacks
         quantity = Integer.parseInt(mQuantityEditText.getText().toString().trim());
         if (quantity > 0) {
             mProductHasChanged = true;
-            quantity -= 1;
+            quantity--;
             mQuantityEditText.setText(String.valueOf(quantity));
         }
     }

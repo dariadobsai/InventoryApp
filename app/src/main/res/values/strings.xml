@@ -85,7 +85,7 @@
 
     <string name="cancel">Cancel</string>
 
-    <string name="product_is_sold">Sold!</string>
+    <string name="product_is_sold">The product is sold</string>
 
     <string name="mail_subject">Order the product</string>
 
@@ -96,6 +96,8 @@
     <string name="snak_bar_msg">Fill all fields and save the data</string>
 
     <string name="image_selector">Select Image</string>
+
+    <string name="priceIs">Price:</string>
 
     <string name="text_about_order"><b>Info:</b> To order the product right now, just click on the Order button and send the email to the official supplier. We will contact you in the next 24 hours</string>
 </resources>

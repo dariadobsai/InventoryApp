@@ -6,6 +6,6 @@
 
     <item
         android:id="@+id/action_delete_all_entries"
-        android:title="@string/menu_action_delete_all_entries"
-        app:showAsAction="never" />
+        android:title="delete"
+        app:showAsAction="ifRoom|withText" />
 </menu>

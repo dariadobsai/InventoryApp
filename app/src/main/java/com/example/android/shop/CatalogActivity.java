@@ -110,7 +110,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
                     mAdapter.setNewSelection(position, checked);
                 } else {
                     itemsSelected--;
-                    deleteAllProducts();
                     mAdapter.removeSelection(position);
                 }
                 mode.setTitle(itemsSelected + " selected");

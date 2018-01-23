@@ -194,10 +194,6 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
             return result == null ? false : result;
         }
 
-//        public Set<Integer> getCurrentCheckedPosition() {
-//            return mSelection.keySet();
-//        }
-
         public void removeSelection(int position) {
             mSelection.remove(position);
             mCursorAdapter.notifyDataSetChanged();

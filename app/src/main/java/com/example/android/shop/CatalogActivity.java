@@ -207,16 +207,5 @@ public class CatalogActivity extends AppCompatActivity implements LoaderCallback
             mSelection = new HashMap<>();
             mCursorAdapter.notifyDataSetChanged();
         }
-
-//        @NonNull
-//        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-//            View v = mAdapter.getView(position, convertView, parent);//let the adapter handle setting up the row views
-//            v.setBackgroundColor(getResources().getColor(android.R.color.background_light)); //default color
-//
-//            if (mSelection.get(position) != null) {
-//                v.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red
-//            }
-//            return v;
-//        }
     }
 }
